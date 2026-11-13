@@ -1,6 +1,6 @@
 <?php
-require_once '../assets/sessioncheck.php';
-require_once '../assets/functions.php';
+require_once 'assets/sessioncheck.php';
+require_once 'assets/functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +10,7 @@ require_once '../assets/functions.php';
     <title>D&H Strength</title>
 </head>
 <body>
-    
+    <h1>D&H Strength</h1>
+    <p>Welcome to D&H Strength!</p>
 </body>
 </html>
