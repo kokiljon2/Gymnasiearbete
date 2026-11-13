@@ -46,9 +46,19 @@ function loggaInKund($pdo, $email, $pwd) {
     return false;
 }
 
-function registreraPersonal($pdo, $namn, $pwd) {
+function registreraPersonal($pdo, $namn, $pwd, $grupp) {
 
-    if (!harRoll('Admin')) {
+    if (!harRoll('Huvudadmin')) {
+        return false;
+    }
+
+    $tillåtnaRoller = ['Personal', 'Admin', 'Ekonom'];
+
+    if (!in_array($grupp, $tillåtnaRoller, true)) {
+        return false;
+    }
+
+    if (empty($namn) || empty($pwd)) {
         return false;
     }
 
@@ -63,13 +73,14 @@ function registreraPersonal($pdo, $namn, $pwd) {
     $hash = password_hash($pwd, PASSWORD_DEFAULT);
 
     $sql = "INSERT INTO personal (pwd, namn, grupp)
-            VALUES (:pwd, :namn, 'Personal')";
+            VALUES (:pwd, :namn, :grupp)";
 
     $stmt = $pdo->prepare($sql);
 
     return $stmt->execute([
         'pwd' => $hash,
-        'namn' => $namn
+        'namn' => $namn,
+        'grupp' => $grupp
     ]);
 }
 
