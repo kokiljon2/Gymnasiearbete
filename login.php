@@ -39,6 +39,6 @@ if (isset($_POST['submit'])){
         <input type="submit" name="submit" value="Login">
     </form>
     <p><a href="signup.php">Skapa en konto</a></p>
-    <p><a href="admin.php">Administration</a></p>
+    <p><a href="adminlogin.php">Administration</a></p>
 </body>
 </html>
