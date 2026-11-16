@@ -1,7 +1,7 @@
 <?php
 
 $hostname = "localhost";
-$database = "gymnasiearbete";
+$database = "Gymnasiearbete";
 $username = "gymnasiearbete";
 $password = "gymnasiearbete";
 
