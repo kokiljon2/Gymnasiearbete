@@ -1,6 +1,7 @@
 <?php
 
-function registreraKund($pdo, $namn, $email, $pwd, $tnummer) {
+function registreraKund($pdo, $namn, $email, $pwd, $tnummer)
+{
 
     $sql = "SELECT id FROM kund WHERE email = :email";
     $stmt = $pdo->prepare($sql);
@@ -25,7 +26,8 @@ function registreraKund($pdo, $namn, $email, $pwd, $tnummer) {
     ]);
 }
 
-function loggaInKund($pdo, $email, $pwd) {
+function loggaInKund($pdo, $email, $pwd)
+{
 
     $sql = "SELECT * FROM kund WHERE email = :email";
     $stmt = $pdo->prepare($sql);
@@ -46,7 +48,8 @@ function loggaInKund($pdo, $email, $pwd) {
     return false;
 }
 
-function registreraPersonal($pdo, $namn, $pwd, $grupp) {
+function registreraPersonal($pdo, $namn, $pwd, $grupp)
+{
 
     if (!harRoll('Huvudadmin')) {
         return false;
@@ -84,7 +87,8 @@ function registreraPersonal($pdo, $namn, $pwd, $grupp) {
     ]);
 }
 
-function loggaInPersonal($pdo, $namn, $pwd) {
+function loggaInPersonal($pdo, $namn, $pwd)
+{
 
     $sql = "SELECT * FROM personal WHERE namn = :namn";
     $stmt = $pdo->prepare($sql);
@@ -106,23 +110,27 @@ function loggaInPersonal($pdo, $namn, $pwd) {
     return false;
 }
 
-function harRoll($roll) {
+function harRoll($roll)
+{
 
     return isset($_SESSION['personal_grupp']) &&
-           $_SESSION['personal_grupp'] === $roll;
+        $_SESSION['personal_grupp'] === $roll;
 }
 
-function arPersonalInloggad() {
+function arPersonalInloggad()
+{
 
     return isset($_SESSION['personal_id']);
 }
 
-function arKundInloggad() {
+function arKundInloggad()
+{
 
     return isset($_SESSION['kund_id']);
 }
 
-function hamtaKundProfil($pdo, $kundId) {
+function hamtaKundProfil($pdo, $kundId)
+{
 
     $sql = "SELECT id, namn, medlemslutdatum, email, tnummer
             FROM kund
@@ -134,7 +142,8 @@ function hamtaKundProfil($pdo, $kundId) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function uppdateraKundProfil($pdo, $kundId, $namn, $email, $tnummer) {
+function uppdateraKundProfil($pdo, $kundId, $namn, $email, $tnummer)
+{
 
     $sql = "UPDATE kund
             SET namn = :namn,
@@ -152,7 +161,8 @@ function uppdateraKundProfil($pdo, $kundId, $namn, $email, $tnummer) {
     ]);
 }
 
-function hamtaLokaler($pdo) {
+function hamtaLokaler($pdo)
+{
 
     $sql = "SELECT * FROM lokal";
 
@@ -161,7 +171,8 @@ function hamtaLokaler($pdo) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function hamtaLokal($pdo, $adr) {
+function hamtaLokal($pdo, $adr)
+{
 
     $sql = "SELECT * FROM lokal WHERE adr = :adr";
 
@@ -171,7 +182,8 @@ function hamtaLokal($pdo, $adr) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function arLokalLedig($pdo, $adr, $intid, $uttid) {
+function arLokalLedig($pdo, $adr, $intid, $uttid)
+{
 
     $sql = "SELECT COUNT(*) FROM bokning
             WHERE adr = :adr
@@ -189,7 +201,8 @@ function arLokalLedig($pdo, $adr, $intid, $uttid) {
     return $stmt->fetchColumn() == 0;
 }
 
-function skapaBokning($pdo, $kundId, $adr, $intid, $uttid, $kostnad) {
+function skapaBokning($pdo, $kundId, $adr, $intid, $uttid, $kostnad)
+{
 
     if (!arKundInloggad() || $_SESSION['kund_id'] != $kundId) {
         return false;
@@ -226,7 +239,8 @@ function skapaBokning($pdo, $kundId, $adr, $intid, $uttid, $kostnad) {
     ]);
 }
 
-function hamtaKundensBokningar($pdo, $kundId) {
+function hamtaKundensBokningar($pdo, $kundId)
+{
 
     $sql = "SELECT * FROM bokning
             WHERE kund_id = :kund_id
@@ -238,7 +252,8 @@ function hamtaKundensBokningar($pdo, $kundId) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function avbokaBokning($pdo, $bokningId, $kundId) {
+function avbokaBokning($pdo, $bokningId, $kundId)
+{
 
     if (!arKundInloggad() || $_SESSION['kund_id'] != $kundId) {
         return false;
@@ -259,7 +274,8 @@ function avbokaBokning($pdo, $bokningId, $kundId) {
     return $stmt->rowCount() > 0;
 }
 
-function hamtaBetalsatt($pdo, $kundId) {
+function hamtaBetalsatt($pdo, $kundId)
+{
 
     $sql = "SELECT id, namn, giltigdatum
             FROM betalsatt
@@ -271,7 +287,8 @@ function hamtaBetalsatt($pdo, $kundId) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function taBortBetalsatt($pdo, $betalsattId, $kundId) {
+function taBortBetalsatt($pdo, $betalsattId, $kundId)
+{
 
     if (!arKundInloggad() || $_SESSION['kund_id'] != $kundId) {
         return false;

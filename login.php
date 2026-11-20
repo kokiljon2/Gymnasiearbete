@@ -2,12 +2,12 @@
 require_once 'assets/functions.php';
 session_start();
 
-if (isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
 
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if(login($username, $password)){
+    if (login($username, $password)) {
         $user = getInfo($username);
         $_SESSION['username'] = $username;
         $_SESSION['password'] = $password;
@@ -15,30 +15,49 @@ if (isset($_POST['submit'])){
         $_SESSION['name'] = $user['name'];
         header('Location: index.php');
         exit();
-    }
-    else{
+    } else {
         echo "Invalid username or password";
-    }   
+    }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D&H Strength</title>
+    <title>Kundlogin</title>
+    <link rel="stylesheet" href="login.css">
 </head>
+
 <body>
-    <form action="" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        <br>
-        <input type="submit" name="submit" value="Login">
-    </form>
-    <p><a href="signup.php">Skapa en konto</a></p>
-    <p><a href="adminlogin.php">Administration</a></p>
+
+    <div class="login-container">
+
+        <h2>Kundlogin</h2>
+        <p>Logga in på ditt konto</p>
+
+        <form action="kundlogin.php" method="POST">
+
+            <div class="form-group">
+                <label for="email">E-post</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Lösenord</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Logga in</button>
+
+        </form>
+
+        <div class="login-link">
+            <a href="registrera.php">Skapa konto</a>
+        </div>
+
+    </div>
+
 </body>
+
 </html>

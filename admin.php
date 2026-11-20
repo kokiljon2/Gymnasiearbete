@@ -12,8 +12,8 @@ $tillåtnaRoller = ['Huvudadmin', 'Admin', 'Personal', 'Ekonom'];
 
 if (!in_array($grupp, $tillåtnaRoller, true)) {
     header("Location: login.php");
-        exit;
-    }
+    exit;
+}
 
 
 if (!isset($uid)) {
@@ -22,7 +22,7 @@ if (!isset($uid)) {
 }
 
 
-    
+
 ?>
 
 <!DOCTYPE html>

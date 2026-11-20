@@ -4,6 +4,8 @@ session_start();
 require_once 'assets/config/db.php';
 require_once 'assets/functions.php';
 
+$felmeddelande = "";
+
 if (isset($_POST['submit'])) {
 
     $namn = $_POST['namn'];
@@ -15,7 +17,7 @@ if (isset($_POST['submit'])) {
         exit();
 
     } else {
-        echo "Felaktigt användarnamn eller lösenord. Kontakta administratören om du inte har ett konto.";
+        $felmeddelande = "Felaktigt användarnamn eller lösenord. Kontakta administratören om du inte har ett konto.";
     }
 }
 ?>
@@ -23,31 +25,47 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personalinloggning</title>
+    <title>Admininloggning</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<h1>Logga in</h1>
+    <div class="login-container">
 
-<form action="" method="post">
+        <?php if (!empty($felmeddelande)): ?>
 
-    <label for="namn">Användarnamn:</label>
-    <input type="text" id="namn" name="namn" required>
+            <div class="error-message">
+                    <?php echo htmlspecialchars($felmeddelande); ?>
+            </div>
 
-    <br>
+        <?php endif; ?>
 
-    <label for="pwd">Lösenord:</label>
-    <input type="password" id="pwd" name="pwd" required>
+        <h2>Adminlogin</h2>
+        <p>Logga in som administratör</p>
 
-    <br>
+        <form action="adminlogin.php" method="POST">
 
-    <input type="submit" name="submit" value="Logga in">
+            <div class="form-group">
+                <label for="namn">Användarnamn</label>
+                <input type="text" id="namn" name="namn" required>
+            </div>
 
-</form>
+            <div class="form-group">
+                <label for="password">Lösenord</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Logga in</button>
+
+        </form>
+
+    </div>
 
 </body>
+
 </html>
