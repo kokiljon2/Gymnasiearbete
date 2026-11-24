@@ -6,10 +6,10 @@ require_once 'assets/functions.php';
 
 $felmeddelande = "";
 
-if (isset($_POST['submit'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $namn = $_POST['namn'];
-    $pwd = $_POST['pwd'];
+    $namn = trim($_POST['namn'] ?? '');
+    $pwd = $_POST['pwd'] ?? '';
 
     if (loggaInPersonal($pdo, $namn, $pwd)) {
 
@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
         exit();
 
     } else {
+
         $felmeddelande = "Felaktigt användarnamn eller lösenord. Kontakta administratören om du inte har ett konto.";
     }
 }
@@ -40,7 +41,7 @@ if (isset($_POST['submit'])) {
         <?php if (!empty($felmeddelande)): ?>
 
             <div class="error-message">
-                    <?php echo htmlspecialchars($felmeddelande); ?>
+                <?php echo htmlspecialchars($felmeddelande); ?>
             </div>
 
         <?php endif; ?>
@@ -56,13 +57,17 @@ if (isset($_POST['submit'])) {
             </div>
 
             <div class="form-group">
-                <label for="password">Lösenord</label>
-                <input type="password" id="password" name="password" required>
+                <label for="pwd">Lösenord</label>
+                <input type="password" id="pwd" name="pwd" required>
             </div>
 
             <button type="submit" class="login-btn">Logga in</button>
 
         </form>
+
+        <div class="login-link">
+            <a href="login.php">Kund inloggning</a>
+        </div>
 
     </div>
 
